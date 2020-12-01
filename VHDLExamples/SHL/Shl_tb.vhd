@@ -59,13 +59,22 @@ architecture Behavioral of Shl_tb is
                 );
         process is 
         begin 
-
+            inputsw <= "0001";
+            inputb <= '0';
             wait for 10 ns; 
- 
+                inputb <= '1';
             wait for 10 ns; 
-
+                inputsw <= "0111";
+                inputb <= '0';
             wait for 10 ns; 
-
-            wait for 10 ns; 
+                inputb <= '1'; 
+            wait for 10 ns;     
+                inputb <= '0'; 
+            wait for 10 ns;     
+                inputb <= '1'; 
+             wait for 10 ns;     
+                inputb <= '0'; 
+            wait for 10 ns;     
+                inputb <= '1'; 
         end process; 
 end Behavioral;
