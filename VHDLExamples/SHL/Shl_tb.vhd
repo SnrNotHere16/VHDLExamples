@@ -20,8 +20,8 @@
 
 
 library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
-
+use IEEE.STD_LOGIC_1164.ALL,
+IEEE.Numeric_STD.all;
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
 --use IEEE.NUMERIC_STD.ALL;
@@ -36,16 +36,16 @@ end Shl_tb;
 
 architecture Behavioral of Shl_tb is
   -- the signals 
-    signal inputSw : std_logic_vector (3 downto 0); 
-    signal inputb : std_logic; 
-    signal lresult : std_logic_vector (3 downto 0); 
+    signal inputSw : unsigned (3 downto 0); 
+    signal inputa : unsigned (1 downto 0);
+    signal lresult : unsigned (3 downto 0); 
     
     --the components of (DUT)
     component ShiftLeftRegister is 
         port (
-            sw : in std_logic_vector (3 downto 0); 
-            shlb : in std_logic; 
-            result : out std_logic_vector
+        sw : in unsigned (3 downto 0);
+        shla : in unsigned (1 downto 0);
+        result : out unsigned (3 downto 0)
         );
     end component ShiftLeftRegister;
  
@@ -54,27 +54,27 @@ architecture Behavioral of Shl_tb is
         ShiftLeftRegister1: ShiftLeftRegister
             port map (
                 sw => inputSw, 
-                shlb => inputb, 
+                shla => inputa, 
                 result => lresult
                 );
         process is 
         begin 
             inputsw <= "0001";
-            inputb <= '0';
+            inputa <= "00";
             wait for 10 ns; 
-                inputb <= '1';
+                inputa <= "01";
             wait for 10 ns; 
-                inputsw <= "0111";
-                inputb <= '0';
+                inputa <= "10";
             wait for 10 ns; 
-                inputb <= '1'; 
+                inputa <= "11"; 
+            wait for 10 ns;  
+                inputsw <= "1010";
+                inputa <= "00"; 
             wait for 10 ns;     
-                inputb <= '0'; 
-            wait for 10 ns;     
-                inputb <= '1'; 
+                inputa <= "01"; 
              wait for 10 ns;     
-                inputb <= '0'; 
+                inputa <= "10"; 
             wait for 10 ns;     
-                inputb <= '1'; 
+                inputa <= "11"; 
         end process; 
 end Behavioral;
