@@ -20,7 +20,8 @@
 
 
 library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_1164.ALL,
+IEEE.Numeric_STD.all;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -33,24 +34,24 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity ShiftLeftRegister is
   Port (
-        sw : in std_logic_vector(3 downto 0);
-        shlb : in std_logic;
-        result : out std_logic_vector (3 downto 0)
+        sw : in unsigned (3 downto 0);
+        shla : in unsigned (1 downto 0);
+        result : out unsigned (3 downto 0)
              );
 end ShiftLeftRegister;
 
 architecture Behavioral of ShiftLeftRegister is
+
 begin
-    process(sw, shlb)
+    process(sw, shla)
     begin 
-        if (shlb = '1') then 
-            result(0) <= '0';
-            result (1) <= sw(0);
-            result (2) <= sw(1);
-            result (3) <= sw(2);
-      else 
-            result <= sw;
-      end if;
+        case shla is
+            when "00" => result <= sw sll 0; 
+            when "01" => result <= sw sll 1; 
+            when "10" => result <= sw sll 2; 
+            when "11" => result <= sw sll 3; 
+            when others => report "Fail" severity failure;
+         end case;
     end process;    
     
 
